@@ -1,0 +1,17 @@
+# VisDrone Dataset YAML
+# Classes: 9
+
+path: D:\projects\drone-detection-project\01_benchmark\data  # dataset root dir
+train: visdrone_yolo/train/images  # train images
+val: visdrone_yolo/val/images      # val images
+test: visdrone_yolo/test/images    # test images (optional)
+
+# Classes
+nc: 9  # number of classes
+names: ['person', 'bicycle', 'car', 'van', 'truck', 'tricycle', 'awning-tricycle', 'bus', 'motor']
+
+# Download command/URL (optional)
+# download: https://github.com/VisDrone/VisDrone-Dataset
+
+# License
+# license: CC BY-NC-SA 4.0

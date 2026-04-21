@@ -1,0 +1,7 @@
+# VisDrone Dataset for Ultralytics YOLO
+path: D:\projects\drone-detection-project\01_benchmark\data
+train: visdrone_yolo/train
+val: visdrone_yolo/val
+
+nc: 9
+names: ['person', 'bicycle', 'car', 'van', 'truck', 'tricycle', 'awning-tricycle', 'bus', 'motor']
