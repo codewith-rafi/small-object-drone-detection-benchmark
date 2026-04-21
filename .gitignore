@@ -1,0 +1,95 @@
+# Model weights
+*.pt
+*.pth
+*.weights
+*.onnx
+*.engine
+
+# Dataset files
+data/visdrone_raw/
+data/visdrone_yolo/
+01_benchmark/data/visdrone_raw/
+01_benchmark/data/visdrone_yolo/
+
+# Training logs and runs
+runs/
+01_benchmark/runs/
+01_benchmark/scripts/runs/
+
+# Cache files
+*.cache
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large files
+*.jpg
+*.png
+*.jpeg
+*.bmp
+*.tiff
+*.zip
+*.tar.gz
+*.7z
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Dataset annotations (already converted to YOLO format)
+annotations/
+
+# Model checkpoints from training
+checkpoints/
+
+# SAHI results
+sahi_results/
+
+# Backup files
+*.bak
+*.backup
+
+# Windows
+ehthumbs.db
+Thumbs.db
+
+# macOS
+._*
+
+# Linux
+*~
+
+# Project specific
+best_model_backup/
+best_epoch84_verified.pt
+best_backup_epoch84.pt
