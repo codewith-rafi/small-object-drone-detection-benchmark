@@ -1,0 +1,29 @@
+name: drone_detection
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pytorch=2.8.0
+  - torchvision=0.23.0
+  - torchaudio=2.8.0
+  - pytorch-cuda=12.1
+  - cudatoolkit=12.1
+  - pip:
+    - ultralytics>=8.3.161
+    - sahi>=0.11.36
+    - opencv-python>=4.8.0
+    - pillow>=10.0.0
+    - matplotlib>=3.7.0
+    - seaborn>=0.12.0
+    - pandas>=2.0.0
+    - numpy>=1.24.0
+    - wandb>=0.16.0
+    - comet-ml>=3.0.0
+    - fiftyone>=0.23.0
+    - tqdm>=4.65.0
+    - pyyaml>=6.0
+    - scikit-learn>=1.3.0
