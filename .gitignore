@@ -28,15 +28,23 @@ __pycache__/
 Thumbs.db
 desktop.ini
 
-# Large files
+# Large media (datasets / accidental dumps)
 *.jpg
-*.png
 *.jpeg
 *.bmp
 *.tiff
 *.zip
 *.tar.gz
 *.7z
+*.png
+*.mp4
+*.avi
+*.mov
+
+# Allow curated portfolio figures
+!01_benchmark/eda_results/*.png
+!01_benchmark/results/**/*.png
+!report/static/images/**
 
 # Python
 *.pyc
@@ -66,14 +74,15 @@ logs/
 *.tmp
 *.temp
 
-# Dataset annotations (already converted to YOLO format)
+# Dataset annotations (raw VisDrone)
 annotations/
 
 # Model checkpoints from training
 checkpoints/
 
-# SAHI results
+# Local SAHI scratch outputs (publish curated copies under 01_benchmark/results/)
 sahi_results/
+01_benchmark/scripts/sahi_parameter_study_results/
 
 # Backup files
 *.bak
@@ -93,3 +102,6 @@ Thumbs.db
 best_model_backup/
 best_epoch84_verified.pt
 best_backup_epoch84.pt
+
+# Nested template git (should never reappear)
+report/.git/
