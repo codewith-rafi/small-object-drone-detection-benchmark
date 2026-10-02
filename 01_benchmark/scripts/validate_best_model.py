@@ -6,32 +6,38 @@ Quick validation of best.pt model to verify it corresponds to epoch 84.
 from ultralytics import YOLO
 import os
 
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DATA_YAML = REPO_ROOT / "01_benchmark" / "data" / "visdrone_simple.yaml"
+VAL_IMAGES = REPO_ROOT / "01_benchmark" / "data" / "visdrone_yolo" / "val" / "images"
+
+
 def main():
     print("="*80)
     print(" VALIDATING best.pt MODEL (Epoch 84)")
     print("="*80)
     
-    # Paths
-    model_path = 'runs/safe/yolov8_xl_restart/weights/best.pt'
-    data_yaml = '../data/visdrone_simple.yaml'
+    # Paths (relative to this script / repo)
+    model_path = Path(__file__).resolve().parent / 'runs/detect/runs/safe/yolov8_xl_restart/weights/best.pt'
+    data_yaml = str(DATA_YAML)
     
-    print(f"\n📁 Model: {model_path}")
-    print(f"📊 Dataset: {data_yaml}")
+    print(f"\nModel: {model_path}")
+    print(f"Dataset: {data_yaml}")
     
-    # Check if files exist
-    if not os.path.exists(model_path):
-        print(f"❌ Model not found: {model_path}")
+    if not model_path.exists():
+        print(f"Model not found: {model_path}")
         return
     
-    if not os.path.exists(data_yaml):
-        print(f"❌ Dataset config not found: {data_yaml}")
+    if not DATA_YAML.exists():
+        print(f"Dataset config not found: {data_yaml}")
         return
     
     print("\n🔍 Loading model...")
     try:
-        model = YOLO(model_path)
-        print(f"✅ Model loaded successfully")
-        print(f"   Model size: {os.path.getsize(model_path) / 1e6:.1f} MB")
+        model = YOLO(str(model_path))
+        print(f"Model loaded successfully")
+        print(f"   Model size: {model_path.stat().st_size / 1e6:.1f} MB")
     except Exception as e:
         print(f"❌ Error loading model: {e}")
         return

@@ -8,6 +8,13 @@ import torch
 from ultralytics import YOLO
 import os
 
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+DATA_YAML = REPO_ROOT / "01_benchmark" / "data" / "visdrone_simple.yaml"
+VAL_IMAGES = REPO_ROOT / "01_benchmark" / "data" / "visdrone_yolo" / "val" / "images"
+
+
 def main():
     print("="*80)
     print(" YOLOv8-XL RESTART TRAINING (WINDOWS-SAFE)")
@@ -59,7 +66,7 @@ def main():
     # Start training with Windows-safe settings
     results = model.train(
         # Dataset
-        data='D:/projects/drone-detection-project/01_benchmark/data/visdrone_simple.yaml',
+        data=str(DATA_YAML),
         
         # Training parameters
         epochs=150,
