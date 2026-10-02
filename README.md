@@ -77,12 +77,6 @@ Baseline detector specs:
 
 *Four-condition design (A/B/C/D) on the same val set. Synergy S = (D-C)-(B-A); redundancy R = 1 - (D-A)/((B-A)+(C-A)); interaction gain IG = (D-A) - max(B-A, C-A).*
 
-Regenerate figures with:
-
-```bash
-python 01_benchmark/scripts/generate_architecture_figures.py
-```
-
 ### Coverage Matrix
 
 
