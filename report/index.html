@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="title" content="Small-Object Detection on Drone Imagery — Rafi Ahmed">
+  <meta name="description" content="VisDrone YOLOv8-XL baseline (0.5375 mAP@0.5) with SAHI, P2-head, and interaction pipeline for aerial small-object detection.">
+  <meta name="keywords" content="VisDrone, small object detection, YOLOv8, SAHI, drone, aerial imagery">
+  <meta name="author" content="Rafi Ahmed">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="codewithrafi.com">
+  <meta property="og:title" content="Small-Object Detection on Drone Imagery">
+  <meta property="og:description" content="VisDrone YOLOv8-XL baseline with SAHI, P2-head, and interaction research pipeline.">
+  <meta property="og:url" content="https://codewith-rafi.github.io/small-object-detection-drone/">
+  <meta property="og:image" content="static/images/architecture_phases.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Small-Object Detection on Drone Imagery">
+  <meta name="twitter:description" content="VisDrone YOLOv8-XL baseline with SAHI, P2-head, and interaction pipeline.">
+  <meta name="twitter:image" content="static/images/architecture_phases.png">
+
+  <meta name="citation_title" content="Small-Object Detection on Drone Imagery: VisDrone YOLOv8-XL Baseline and SAHI/P2 Protocol">
+  <meta name="citation_author" content="Ahmed, Rafi">
+  <meta name="citation_publication_date" content="2026">
+
+  <title>Small-Object Detection on Drone Imagery | Rafi Ahmed</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Small-Object Detection on Drone Imagery: VisDrone YOLOv8-XL Baseline and SAHI/P2 Protocol",
+    "author": [{"@type": "Person", "name": "Rafi Ahmed", "url": "https://www.codewithrafi.com"}],
+    "datePublished": "2026",
+    "url": "https://github.com/codewith-rafi/small-object-detection-drone",
+    "keywords": ["VisDrone", "YOLOv8", "SAHI", "small object detection"]
+  }
+  </script>
+  <style>
+    .phase-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem;
+      height: 100%;
+      background: #fff;
+    }
+    .phase-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+    .phase-card .phase-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #475569;
+      margin-bottom: 0.25rem;
+    }
+    .phase-card p {
+      font-size: 0.92rem;
+      color: #334155;
+      margin-bottom: 0;
+    }
+    .architecture-figure {
+      width: 100%;
+      height: auto;
+      margin-bottom: 1.25rem;
+    }
+    .author-site {
+      margin-top: 0.15rem !important;
+      margin-bottom: 0.75rem !important;
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Small-Object Detection<br>on Drone Imagery
+            </h1>
+            <div class="is-size-5 publication-authors" style="margin-bottom:0;">
+              <span class="author-block">
+                <a href="https://www.codewithrafi.com" target="_blank">Rafi Ahmed</a>
+              </span>
+            </div>
+            <div class="is-size-6 publication-authors author-site">
+              <span class="author-block">
+                <a href="https://www.codewithrafi.com" target="_blank">www.codewithrafi.com</a>
+              </span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://github.com/codewith-rafi/small-object-detection-drone" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/codewith-rafi/small-object-detection-drone/blob/main/01_benchmark/results/baseline_metrics.json" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span>
+                    <span>Metrics</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/codewith-rafi/small-object-detection-drone#readme" target="_blank"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-book"></i></span>
+                    <span>README</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Detecting small, densely packed objects in drone imagery remains difficult for standard single-stage detectors.
+              This project builds a reproducible <strong>YOLOv8-XL</strong> pipeline on <strong>VisDrone-DET</strong> under an
+              8&nbsp;GB Windows training recipe, then extends the same checkpoint into a structured research architecture:
+              <strong>SAHI</strong> sliced inference, a <strong>P2</strong> high-resolution detection head, a four-condition
+              interaction study, and failure analysis. The Phase&nbsp;1 baseline reaches
+              <strong>0.5375 mAP@0.5</strong> (0.3472 mAP@0.5:0.95) at epoch&nbsp;84.
+              VisDrone images and model weights are not redistributed with the public code.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Architecture</h2>
+        <p class="content has-text-centered" style="margin-bottom:1rem;">
+          Five-phase research pipeline from VisDrone baseline through SAHI, P2 head, interaction ablation, and failure analysis.
+        </p>
+        <img class="architecture-figure" src="static/images/architecture_phases.png"
+             alt="Five-phase research pipeline overview"
+             loading="lazy"/>
+
+        <div class="columns is-multiline" style="margin-top:0.5rem;margin-bottom:1.5rem;">
+          <div class="column is-half">
+            <div class="phase-card">
+              <div class="phase-label">Phase 1</div>
+              <h3>Baseline</h3>
+              <p>Establish a strong VisDrone detector under an 8GB Windows recipe so later methods share one fixed checkpoint. Result: <strong>0.5375 mAP@0.5</strong> at epoch 84.</p>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="phase-card">
+              <div class="phase-label">Phase 2</div>
+              <h3>SAHI</h3>
+              <p>Apply sliced inference so small objects are seen at higher effective resolution, and find slice/overlap settings that balance accuracy and speed.</p>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="phase-card">
+              <div class="phase-label">Phase 3</div>
+              <h3>P2 Head</h3>
+              <p>Add a finer-scale detection head so the network keeps high-resolution features that standard P3–P5 heads miss on tiny instances.</p>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="phase-card">
+              <div class="phase-label">Phase 4</div>
+              <h3>Interaction</h3>
+              <p>Compare baseline, SAHI-only, P2-only, and both together to see whether the two fixes help each other or overlap.</p>
+            </div>
+          </div>
+          <div class="column is-full">
+            <div class="phase-card">
+              <div class="phase-label">Phase 5</div>
+              <h3>Analysis</h3>
+              <p>Study failure cases and turn them into practical guidance on when to use SAHI, P2, or the combination.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="title is-4">System pipeline</h3>
+        <img class="architecture-figure" src="static/images/fig01_system_pipeline.png"
+             alt="End-to-end system pipeline from VisDrone data through training, SAHI, P2, interaction, and analysis"
+             loading="lazy"/>
+        <p class="subtitle has-text-centered" style="margin-bottom:1.75rem;">
+          Data and EDA feed the YOLOv8-XL baseline; SAHI and P2 branch from that checkpoint, then meet in the interaction study and analysis.
+        </p>
+
+        <h3 class="title is-4">Detector: YOLOv8-XL vs P2 head</h3>
+        <img class="architecture-figure" src="static/images/fig02_yolov8_vs_p2.png"
+             alt="Side-by-side YOLOv8-XL P3-P5 heads versus P2-augmented P2-P5 detection heads"
+             loading="lazy"/>
+        <p class="subtitle has-text-centered" style="margin-bottom:1.75rem;">
+          Baseline Detect operates on P3/P4/P5. The P2 variant adds a 1/4-scale head to retain fine spatial detail for VisDrone objects under 32×32 pixels.
+        </p>
+
+        <h3 class="title is-4">SAHI sliced inference</h3>
+        <img class="architecture-figure" src="static/images/fig03_sahi_inference.png"
+             alt="SAHI tiling pipeline and 4 by 4 slice-overlap parameter grid"
+             loading="lazy"/>
+        <p class="subtitle has-text-centered" style="margin-bottom:1.75rem;">
+          Overlapping tiles are inferred independently and merged with NMS. The study enumerates 16 slice×overlap settings against a no-SAHI baseline for accuracy–speed trade-offs.
+        </p>
+
+        <h3 class="title is-4">Interaction study (A/B/C/D)</h3>
+        <img class="architecture-figure" src="static/images/fig04_interaction_matrix.png"
+             alt="Two by two interaction matrix of baseline SAHI P2 and combined conditions"
+             loading="lazy"/>
+        <p class="subtitle has-text-centered" style="margin-bottom:0.5rem;">
+          Same VisDrone val set (548 images), focus on objects &lt;32px, report mAP and FPS.
+          Metrics: S = (D−C)−(B−A); R = 1 − (D−A)/((B−A)+(C−A)); IG = (D−A) − max(B−A, C−A).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Dataset</h2>
+      <div class="content">
+        <p>
+          VisDrone-DET is dominated by small instances: exploratory analysis on a 1,000-image train subsample finds
+          <strong>66.2%</strong> of boxes smaller than 32×32 pixels and about <strong>68 objects per image</strong>.
+          Official DET training contains 6,471 images; the EDA table below is the subsample used for characterization.
+        </p>
+      </div>
+      <img src="static/images/dataset_statistics.png" alt="VisDrone EDA statistics" loading="lazy"/>
+      <div class="table-container" style="margin-top:1.5rem;">
+        <table class="table is-striped is-fullwidth">
+          <thead>
+            <tr><th>Split (EDA)</th><th>Images</th><th>Objects</th><th>Avg / image</th><th>Small (&lt;32px)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Train subsample</td><td>1,000</td><td>67,741</td><td>67.7</td><td>66.2%</td></tr>
+            <tr><td>Val</td><td>548</td><td>35,251</td><td>64.3</td><td>65.9%</td></tr>
+            <tr><td>Test (local tooling)</td><td>209</td><td>13,446</td><td>64.3</td><td>62.1%</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3">Baseline Results</h2>
+        <img src="static/images/training_curves.png" alt="YOLOv8-XL training curves" loading="lazy"/>
+        <div class="table-container" style="margin-top:1.5rem;">
+          <table class="table is-striped is-fullwidth">
+            <thead>
+              <tr><th>Metric</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Best epoch</td><td>84</td></tr>
+              <tr><td>mAP@0.5</td><td><strong>0.53746</strong></td></tr>
+              <tr><td>mAP@0.5:0.95</td><td>0.34715</td></tr>
+              <tr><td>Precision / Recall</td><td>0.613 / 0.531</td></tr>
+              <tr><td>Recipe</td><td>imgsz 1280, batch 1, workers 0, AdamW, AMP</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="content">
+          Full per-epoch log:
+          <a href="https://github.com/codewith-rafi/small-object-detection-drone/blob/main/01_benchmark/results/yolov8x_baseline_results.csv" target="_blank">yolov8x_baseline_results.csv</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@software{ahmed2026small_object_drone,
+  title  = {Small-Object Detection on Drone Imagery: VisDrone YOLOv8-XL Baseline and SAHI/P2 Protocol},
+  author = {Ahmed, Rafi},
+  year   = {2026},
+  url    = {https://github.com/codewith-rafi/small-object-detection-drone}
+}
+
+@article{zhu2021detection,
+  title   = {Detection and Tracking Meet Drones Challenge},
+  author  = {Zhu, Pengfei and Wen, Longyin and Du, Dawei and Bian, Xiao and Fan, Heng and Hu, Qinghua and Ling, Haibin},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume  = {44},
+  number  = {11},
+  pages   = {7380--7399},
+  year    = {2022}
+}
+
+@inproceedings{akyon2022sahi,
+  title     = {Slicing Aided Hyper Inference and Fine-tuning for Small Object Detection},
+  author    = {Akyon, Fatih Cagatay and Altinuc, Sinan Onur and Temizel, Alptekin},
+  booktitle = {2022 IEEE International Conference on Image Processing (ICIP)},
+  pages     = {966--970},
+  year      = {2022},
+  doi       = {10.1109/ICIP46576.2022.9897990}
+}</code></pre>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop content has-text-centered">
+      <h2 class="title is-4">Contact</h2>
+      <p>
+        <strong>Rafi Ahmed</strong><br>
+        <a href="mailto:codewithrafi@outlook.com">codewithrafi@outlook.com</a> ·
+        <a href="https://github.com/codewith-rafi" target="_blank">GitHub</a> ·
+        <a href="https://www.codewithrafi.com" target="_blank">www.codewithrafi.com</a>
+      </p>
+    </div>
+  </section>
+  </main>
+</body>
+</html>
