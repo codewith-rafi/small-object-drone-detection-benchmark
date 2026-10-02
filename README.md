@@ -12,7 +12,7 @@
 
 SAHI · P2 head · Interaction study · RTX 5060 8GB Windows baseline
 
-[Project page](https://codewith-rafi.github.io/small-object-detection-drone/) · [Baseline metrics](./01_benchmark/results/baseline_metrics.json) · [Code](https://github.com/codewith-rafi/small-object-detection-drone)
+[Project page](https://codewith-rafi.github.io/small-object-drone-detection-benchmark/) · [Baseline metrics](./01_benchmark/results/baseline_metrics.json) · [Code](https://github.com/codewith-rafi/small-object-drone-detection-benchmark)
 
 </div>
 
@@ -40,7 +40,7 @@ This project addresses that split by combining:
 
 ### Architecture
 
-System pipeline
+![System pipeline](01_benchmark/results/architecture/fig01_system_pipeline.png)
 
 *Data -> baseline checkpoint -> SAHI and P2 branches -> interaction -> analysis -> public artifacts.*
 
@@ -52,14 +52,13 @@ Baseline detector specs:
 - Optimizer: AdamW, cosine LR, AMP
 - Augmentations: mosaic, copy-paste, HSV (aerial-safe: no flip-up/down)
 
-YOLOv8 vs P2
+![YOLOv8 vs P2](01_benchmark/results/architecture/fig02_yolov8_vs_p2.png)
 
 *Baseline Detect on P3/P4/P5 versus P2-augmented Detect on P2/P3/P4/P5 (1/4-scale head for small objects).*
 
 ### Experimental Protocol
 
-Research pipeline overview
-
+![Research pipeline overview](01_benchmark/results/architecture_phases.png)
 
 | Phase                     | Focus                                                                         |
 | ------------------------- | ----------------------------------------------------------------------------- |
@@ -70,11 +69,11 @@ Research pipeline overview
 | **Phase 5 - Analysis**    | Failure cases and practical guidance                                          |
 
 
-SAHI inference
+![SAHI inference](01_benchmark/results/architecture/fig03_sahi_inference.png)
 
 *Sliced inference with NMS merge, and the 4x4 slice x overlap study grid against a no-SAHI baseline.*
 
-Interaction matrix
+![Interaction matrix](01_benchmark/results/architecture/fig04_interaction_matrix.png)
 
 *Four-condition design (A/B/C/D) on the same val set. Synergy S = (D-C)-(B-A); redundancy R = 1 - (D-A)/((B-A)+(C-A)); interaction gain IG = (D-A) - max(B-A, C-A).*
 
@@ -154,8 +153,7 @@ From `01_benchmark/results/yolov8x_baseline_results.csv`:
 
 Reference context often cited for VisDrone YOLOv8-XL setups is ≈0.56 `mAP@0.5`; this run reaches **≈96%** of that headline under the documented 8GB Windows constraints.
 
-Training curves
-
+![Training curves](01_benchmark/results/training_curves.png)
 ### Later Phases
 
 Phases 2-5 reuse the Phase 1 checkpoint and evaluation definitions. Run locally after data and weights are available:
@@ -193,8 +191,8 @@ Four-condition interaction design: Baseline · Baseline+SAHI · P2 · P2+SAHI - 
 ### Environment
 
 ```bash
-git clone https://github.com/codewith-rafi/small-object-detection-drone.git
-cd small-object-detection-drone
+git clone https://github.com/codewith-rafi/small-object-drone-detection-benchmark.git
+cd small-object-drone-detection-benchmark
 
 conda env create -f environment.yml
 conda activate drone_detection
@@ -251,7 +249,7 @@ Paths resolve from the repository root via `Path(__file__)`; dataset YAML under 
   title  = {Small-Object Detection on Drone Imagery: VisDrone YOLOv8-XL Baseline and SAHI/P2 Protocol},
   author = {Ahmed, Rafi},
   year   = {2026},
-  url    = {https://github.com/codewith-rafi/small-object-detection-drone}
+  url    = {https://github.com/codewith-rafi/small-object-drone-detection-benchmark}
 }
 ```
 
